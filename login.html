@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url(image.jpg);
+            background-repeat: no-repeat;
+            background-size: cover; 
+            background-color: aliceblue;
+        }
+        #formating {
+            padding: 20px;
+            width: 350px;
+            border: 3px solid;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+            background: white;
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 10px;
+            border: 1px solid #888; 
+        }
+        button {
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #da4a0c;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover{
+            background-color: #2dd327;
+        }
+        p a{
+            color: black;
+        }
+        .avatar{
+            width: 100px;
+                height: 100px;
+                margin: 0 auto 15px auto;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 3px solid #88da0c;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: white;
+                animation: bounce 2s infinite;
+        }
+        .avatar img{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <form id="formating">
+            <h2>Login</h2>
+        <div class="avatar">
+            <img src="image1.png" alt="avatar" >
+        </div>
+        <input type="text" id="loginUsername" placeholder="Enter Username" required><br>
+        <input type="password" id="loginPassword" placeholder="Enter Password" required><br>
+        <button type="button" onclick="loginUser()">Login</button>
+        <p>Don’t have an account? <a href="register.html" target="_blank">Register here</a>😀</p>
+    </form>
+
+    <script>
+        function loginUser() {
+            let storedUser = localStorage.getItem("username");
+            let storedPass = localStorage.getItem("password");
+
+            let username = document.getElementById("loginUsername").value;
+            let password = document.getElementById("loginPassword").value;
+
+            if(username === storedUser && password === storedPass){
+                alert("Login successful ✅");
+            } else {
+                alert("Invalid username or password ❌");
+            }
+        }
+    </script>
+</body>
+</html>

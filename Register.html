@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+            body{
+                font-family: 'Times New Roman', Times, serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: aliceblue;
+                background: url(image.jpg);
+                background-repeat: no-repeat;
+                background-size: cover;
+
+            }
+            button {
+                margin-top: 10px;
+                width:100%;
+                margin: 8px 0;
+                padding: 10px;
+                border: 1px solid;
+                font-size: 16px;
+                font-weight: bold;
+                background-color: #da580c;
+                color: white;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #75a725;
+            }
+            #formating{
+                padding: 20px;
+                width: 350px;
+                border: 3px solid;
+                border-radius:10px;
+                text-align: center;
+                box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+                background-color: white;
+            }
+            #formating input{
+                text-align: left;
+                padding: 10px;
+                margin: 8px 0;
+                width: 95%;
+                padding: 10px;
+                border-radius: 10px;
+                border: 1px solid;
+                
+            }
+            #formating select{
+                text-align: center;
+                width: 215px;
+                padding: 5px;
+                border-radius: 10px;
+                border: 1px solid;
+                transition: border 0.3s;
+            }
+            #formating input[type="radio"]{
+                width: auto;
+                margin-right: 5px;
+            }   
+            a{
+                color: black;
+                font-weight: bold;
+            }
+            .avatar {
+                width: 100px;
+                height: 100px;
+                margin: 0 auto 15px auto;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 3px solid #88da0c;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: white;
+                animation: bounce 2s infinite;
+            }
+            .avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        </style>
+    </head>
+    <body>
+        <form  id="formating">
+            <h2>Register Page </h2> 
+            <div class="avatar">
+                <img src="image1.png" alt="avatar">
+            </div>
+            Gender :
+            MR<input type="radio" id="Mr" value="Mr" name="title">
+            MS<input type="radio" id="Ms" value="Ms"  name="title"><br>
+            <input type="text" id="regUsername" placeholder="username"><br>
+
+            <input type="tel" placeholder="123-456-7890"><br>
+
+            <input type="password" id="regPassword" placeholder="password" required><br>
+
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required><br>
+
+            <input type="email" id="email" placeholder="axy@gmail.com"><br>
+
+            <input type="date"><br>
+
+            <button type="button" onclick="registerUser()">Register</button>
+            <br>
+            <p>If you are already register ? ➡️ <a href="login.html" target="_blank">Login</a>😊</p>
+ 
+        </form>
+
+
+
+        <script>
+         function registerUser() {
+            let username = document.getElementById("regUsername").value;
+            let password1 = document.getElementById("regPassword").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+            let email = document.getElementById("email").value;
+
+             if(password1 !== confirmPassword){
+                alert("Passwords do not match ❌");
+                return;
+            }
+
+            if(!username || !password || !confirmPassword || !email){
+                alert("Please fill all fields ❌");
+                return;
+            }
+
+            if(password !== confirmPassword){
+                alert("Passwords do not match ❌");
+                return;
+            }
+
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password);
+            document.write("You have registered successfully. Please proceed to the login page.");
+            alert("Registration successful ✅ Redirecting to Login...");
+
+            window.location.href = "login.html"; // Redirect to login page
+        }  
+    
+        </script>
+
+
+    </body>
+</html>
