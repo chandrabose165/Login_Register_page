@@ -109,6 +109,8 @@
 
             <button type="button" onclick="registerUser()">Register</button>
             <br>
+                  <p id="error-message" class="error" style="color: red;"></p>
+            <br>
             <p>If you are already register ? ➡️ <a href="login.html" >Login</a>😊</p>
  
         </form>
@@ -121,7 +123,13 @@
             let password1 = document.getElementById("regPassword").value;
             let confirmPassword = document.getElementById("confirmPassword").value;
             let email = document.getElementById("email").value;
+            const errormessage = document.getElementById("error-message"); 
+            let regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()_+{}\[\]:;"'<>,.?~`-]).{6,}$/;
 
+            if(!regex.test(password1)){
+                errormessage.textContent = "Password must be at least 6 characters long and include at least one uppercase letter, one lowercase letter, and one special character.";
+                return;
+            } 
              if(password1 !== confirmPassword){
                 alert("Passwords do not match ❌");
                 return;
