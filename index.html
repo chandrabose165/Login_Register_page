@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register, Login, Dashboard</title>
+    <style>
+        body{
+            font-family: 'Times New Roman', Times, serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: aliceblue;
+            background: url(image.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        #container {
+            width: 400px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            text-align: center;
+        }
+        input, select {
+            width: 95%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 10px;
+            border: 1px solid;
+        }
+        button {
+            margin-top: 10px;
+            width:100%;
+            padding: 10px;
+            border: 1px solid;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #da580c;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #75a725;
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #88da0c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .error {
+            color: red;
+        }
+        .link {
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        #dashboard {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <!-- Register Form -->
+        <form id="registerForm">
+            <h2>Register Page</h2>
+            <div class="avatar">
+                <img src="image1.png" alt="avatar">
+            </div>
+            Gender :
+            MR<input type="radio" id="Mr" value="Mr" name="title">
+            MS<input type="radio" id="Ms" value="Ms"  name="title"><br>
+            <input type="text" id="regUsername" placeholder="username"><br>
+            <input type="tel" id="regTel" placeholder="1234567890" pattern="[0-9]{10,}" maxlength="10" title="Please enter numbers only"><br>
+            <input type="password" id="regPassword" placeholder="password" required><br>
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required><br>
+            <input type="email" id="regEmail" placeholder="axy@gmail.com"><br>
+            <input type="date" id="regDate"><br>
+            <button type="button" onclick="registerUser()">Register</button>
+            <p id="register-error" class="error"></p>
+            <p>Already registered? <span class="link" onclick="showLogin()">Login</span> 😊</p>
+        </form>
+
+        <!-- Login Form -->
+        <form id="loginForm" style="display:none;">
+            <h2>Login Page</h2>
+            <div class="avatar">
+                <img src="image1.png" alt="avatar">
+            </div>
+            <input type="text" id="loginUsername" placeholder="username"><br>
+            <input type="password" id="loginPassword" placeholder="password"><br>
+            <button type="button" onclick="loginUser()">Login</button>
+            <p id="login-error" class="error"></p>
+            <p>Don't have an account? <span class="link" onclick="showRegister()">Register</span></p>
+        </form>
+
+        <!-- Dashboard -->
+        <div id="dashboard">
+            <h2>Welcome, <span id="dashUser"></span>!</h2>
+            <p>Your email: <span id="dashEmail"></span></p>
+            <p>Your telephone: <span id="dashTel"></span></p>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <script>
+        // Show/hide forms
+        function showLogin() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = '';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('register-error').textContent = '';
+            document.getElementById('login-error').textContent = '';
+        }
+        function showRegister() {
+            document.getElementById('registerForm').style.display = '';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('register-error').textContent = '';
+            document.getElementById('login-error').textContent = '';
+        }
+        function showDashboard() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('dashboard').style.display = '';
+        }
+
+        // Register
+        function registerUser() {
+            let username = document.getElementById("regUsername").value.trim();
+            let password1 = document.getElementById("regPassword").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+            let email = document.getElementById("regEmail").value.trim();
+            let tel = document.getElementById("regTel").value.trim();
+            let gender = document.querySelector('input[name="title"]:checked');
+            let date = document.getElementById("regDate").value;
+            const errormessage = document.getElementById("register-error"); 
+            let regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()_+{}\[\]:;"'<>,.?~`-]).{6,}$/;
+
+            if (!username || !password1 || !confirmPassword || !email || !tel || !gender || !date) {
+                errormessage.textContent = "Please fill all fields ❌";
+                return;
+            }
+            if (!/^\d{10}$/.test(tel)) {
+                errormessage.textContent = "Telephone must contain exactly 10 digits.";
+                return;
+            }
+            if(!regex.test(password1)){
+                errormessage.textContent = "Password must be at least 6 characters long and include at least one uppercase letter, one lowercase letter, and one special character.";
+                return;
+            } 
+            if(password1 !== confirmPassword){
+                errormessage.textContent = "Passwords do not match ❌";
+                return;
+            }
+            // Save to localStorage
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password1);
+            localStorage.setItem("email", email);
+            localStorage.setItem("tel", tel);
+            localStorage.setItem("gender", gender.value);
+            localStorage.setItem("date", date);
+            errormessage.textContent = "";
+            alert("Registration successful ✅ Please login.");
+            showLogin();
+        }
+
+        // Login
+        function loginUser() {
+            let username = document.getElementById("loginUsername").value.trim();
+            let password = document.getElementById("loginPassword").value;
+            const errormessage = document.getElementById("login-error");
+            let storedUsername = localStorage.getItem("username");
+            let storedPassword = localStorage.getItem("password");
+            if (!username || !password) {
+                errormessage.textContent = "Please enter username and password.";
+                return;
+            }
+            if (username === storedUsername && password === storedPassword) {
+                errormessage.textContent = "";
+                loadDashboard();
+                showDashboard();
+            } else {
+                errormessage.textContent = "Invalid username or password.";
+            }
+        }
+
+        // Dashboard
+        function loadDashboard() {
+            document.getElementById("dashUser").textContent = localStorage.getItem("username") || "";
+            document.getElementById("dashEmail").textContent = localStorage.getItem("email") || "";
+            document.getElementById("dashTel").textContent = localStorage.getItem("tel") || "";
+        }
+        function logout() {
+            showLogin();
+            document.getElementById("loginUsername").value = "";
+            document.getElementById("loginPassword").value = "";
+        }
+
+        // On page load, show register
+        showRegister();
+    </script>
+</body>
+</html>
