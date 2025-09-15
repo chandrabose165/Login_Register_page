@@ -180,6 +180,11 @@
             errormessage.textContent = "";
             alert("Registration successful ✅ Please login.");
             showLogin();
+
+        if (!email) {
+            errormessage.textContent = "Please enter email ❌";
+            return;
+        }
         }
 
         // Login
